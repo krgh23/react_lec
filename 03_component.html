@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +15,11 @@
 
     1. React는 컴포넌트를 이용해 재사용이 가능한 화면 조각을 구성합니다.
     2. 컴포넌트는 화면에 표시할 Element를 반환합니다.
-    3. 컴포넌트의 이름은 Pascal Case 룰을 따릅니다. (첫 글자가 대문자인 Camel Case)
+    3. 컴포넌트의 이름은 Pascal Case 룰을 따릅니다. (첫 글자가 대문자인 Camel Case - 자바 클래스 이름)
     4. 컴포넌트는 <컴포넌트/> 형식으로 호출해서 사용합니다.
     5. 컴포넌트 호출 시 속성을 선언하고 값을 전달할 수 있습니다.
       <컴포넌트 속성=값/>
-       컴포넌트 속성으로 전달된 값은 컴포넌트의 props 객체가 받습니다.(매개변수가 props 입니다.)
+       컴포넌트 속성으로 전달된 값은 컴포넌트의 props 객체가 받습니다. (매개변수가 props 입니다.)
     6. 컴포넌트 생성 방법
       1) 클래스 컴포넌트
         (1) JavaScript 클래스를 이용합니다. 
@@ -32,22 +32,23 @@
         (2) 함수 선언이나 함수 표현식 모두 사용할 수 있습니다.
         (3) 상대적으로 간결합니다.
         (4) 단점으로 지적되던 state와 life cycle API 사용 불가가 v16.8 이후로 훅(hooks)을 통해 해결되었습니다.
-        (5) 리엑트에서는 함수 컴포넌트 사용을 권장합니다.
+        (5) 리액트에서는 함수 컴포넌트 사용을 권장합니다.
   -->
 
   <div id="root1"></div>
   <script type="text/babel">
 
-    // 클래스형 컴포넌트
+    // 클래스형 컴포넌트 생성
     
     class WelcomeComp extends React.Component {
       render() {
-        return <h1>Welcom React</h1>
+        return <h1>Welcome React</h1>
       }
     }
 
     // render
-    ReactDOM.createRoot(document.getElementById('root1')).render(<WelcomeComp/>);
+
+    ReactDOM.createRoot(document.getElementById('root1')).render(<WelcomeComp/>)
 
   </script>
   
@@ -56,9 +57,11 @@
   <div id="root2"></div>
   <script type="text/babel">
 
-    // 컴포넌트 처리하는 코드는 이 쪽에 있습니다...
-
+  // 함수형 컴포넌트 생성
+    
     function HelloComp() {
+
+      // 컴포넌트 처리하는 코드는 이 쪽에 있습니다...
       
       return (
         <>
@@ -70,19 +73,19 @@
     }
 
     // render
-    ReactDOM.createRoot(document.getElementById('root2')).render(<HelloComp/>);
+
+    ReactDOM.createRoot(document.getElementById('root2')).render(<HelloComp/>)
 
   </script>
 
   <hr/>
-
 
   <!-- 
     컴포넌트 합성
 
     1. 컴포넌트는 다른 컴포넌트를 이용해 구성할 수 있습니다.
     2. 가능한 컴포넌트를 작게 만들어서 사용하는 것이 좋습니다.
-    2. 리액트에서는 버튼, 폼 등 대부분의 구성 요소를 컴포넌트로 만들어서 사용합니다.
+    3. 리액트에서는 버튼, 폼 등 대부분의 구성 요소를 컴포넌트로 만들어서 사용합니다.
   -->
   <div id="root3"></div>
   <script type="text/babel">
@@ -106,7 +109,8 @@
     }
 
     // render
-    ReactDOM.createRoot(document.getElementById('root3')).render(<OuterComp/>);
+
+    ReactDOM.createRoot(document.getElementById('root3')).render(<OuterComp/>)
 
   </script> 
 
@@ -114,7 +118,6 @@
 
   <!-- 
     props
-
     1. properties 의 줄임말로 속성을 의미합니다.
     2. 컴포넌트 호출 시 속성을 선언하고 값을 전달하면 props 객체가 그 값을 받습니다.
     3. props 객체는 읽기 전용이므로 props 객체의 값을 바꿀 수 없습니다.
@@ -143,7 +146,7 @@
     }
  
     function NameCard2(props) {
-      // 객체 구조 분해 할당 문법을 활용해 봅시다.
+      // 객체 구조 분해 할당 문법을 활용해 봅니다.
       // 객체의 각 프로퍼티를 개별 변수로 손쉽게 저장할 수 있습니다.
       const { name, tel } = props;  // const { 변수, 변수 } = 객체
       return (
@@ -151,7 +154,7 @@
       )
     }
  
-    function NameCard3({name, tel}) { // 좀더 적극적으로 객체 구조 분해 할당 문법을 사용합니다.
+    function NameCard3({ name, tel }) {  // 좀 더 적극적으로 객체 구조 분해 할당 문법을 사용합니다.
       return (
         <h1>이름 : {name}, 연락처 : {tel}</h1>
       )
@@ -173,15 +176,16 @@
       [
         <NameCard1 name={'Alice'} tel={'010-0000-0000'} />,
         <NameCard2 name={'James'} tel={'010-1111-1111'} />,
-        <NameCard3 name={'Kim'} tel={'010-2222-2222'} />,
+        <NameCard3 name={'Kim'}   tel={'010-2222-2222'} />,
         <NameCard4 />
       ]
-    );
+    )
+
   </script> 
 
   <hr/>
 
-  <!-- props.children : 컴포넌트 호출할 때 컴포넌트 내부 요소를 사용할 때 children 을 이용합니다. -->
+  <!-- props.children : 컴포넌트를 호출할 때 컴포넌트 내부 요소를 사용할 때 children 을 이용합니다. -->
   <div id="root5"></div>
   <script type="text/babel">
 
@@ -197,7 +201,43 @@
         <GiftCard>3만원</GiftCard>,
         <GiftCard><em>5만원</em></GiftCard>
       ]  
-    );
+    )
+
+</script>
+
+<hr/>
+
+<!--
+  prop-types
+  1. props 객체에 저장된 속성들의 타입 등을 명시함으로써 다른 개발자와 협업 시 개발 능률을 높일 수 있습니다.
+  2. 별도 CDN 추가가 필요합니다. (참고 : https://github.com/facebook/prop-types)
+-->
+<div id="root6"></div>
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+<script type="text/babel">
+
+  function PrintComp({name, age, hobbies}) {
+    return (
+      <div>
+        <h1>My name is {name}.</h1>
+        <h1>I'm {age} years old.</h1>
+        <h1>I like {hobbies[0]} and {hobbies[1]}</h1>
+      </div>
+    )
+  }
+
+  PrintComp.propTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number.isRequired,
+    hobbies: PropTypes.array
+  }
+
+  ReactDOM.createRoot(document.getElementById('root6')).render(
+    [
+      <PrintComp name="Alice" age={20} hobbies={['Swimming', 'Running']}/>,
+      <PrintComp name={10} age={'Tom'} hobbies={'Basketball'}/>  // 총 3개의 Warning 발생 (Console 탭에서 확인 가능합니다.)
+    ]
+  )
 
   </script> 
 
