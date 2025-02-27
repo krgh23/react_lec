@@ -1,12 +1,9 @@
-import { useState, useEffect } from 'react';
-import { getBlog } from '../../api/blogAPI';
-import CustomNavigate from '../../hooks/CustomNavigate';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DetailComp = ({ id }) => {
-
-  // 페이지 이동 함수
-  const { goToEditPage } = CustomNavigate();
-
+  
   // blog 객체 선언
   const [blog, setBlog] = useState({
     id: 0,
@@ -15,17 +12,29 @@ const DetailComp = ({ id }) => {
     createDt: '',
   });
 
-  // useEffect() : 최초 렌더링 시 또는 id가 변하면 블로그 상세 조회
+  // 최초 렌더링 and id가 변하면 서버에 상세 정보를 요청
   useEffect(() => {
-    getBlog(id)
-      .then(jsonData => {
-        setBlog(jsonData.results.blog);
-      })
-  }, [id]);
+    const getBlog = async () => {
+      const response = await axios.get(`http://localhost:8080/blogs/${id}`);
+      const jsonData = await response.data
+      setBlog(jsonData.results.blog);
+    }
+    getBlog();
+  },[id]);
+  
+  // 페이지 이동하는 useNavigate()
+  const navigate = useNavigate();
 
-  // div() : <div> 태그 반환 함수
+  // 편집 페이지로 이동하는 fnEditPage()
+  const fnEditPage = (id) => {
+    navigate({
+      pathname: `/blog/edit/${id}`,
+    })
+  }
+
+  // <div> 태그를 만드는 함수
   const div = (label, value) => {
-    return (
+    return(
       <div style={{display: 'flex'}}>
         <div style={{width: '100px', color: 'blue'}}>{label}</div>
         <div style={{width: '500px'}}>{value}</div>
@@ -40,12 +49,11 @@ const DetailComp = ({ id }) => {
       { div('CONTENT', blog.content) }
       { div('CREATE_DT', blog.createDt.replace('T', ' ')) }
       <div>
-        <button onClick={() => { goToEditPage(blog.id) }}>편집하기</button>
-        <button onClick={() => {}}>목록보기</button>
+        <button onClick={() => { fnEditPage(blog.id) }}>편집하기</button>
+        <button onClick={() => {  }}>목록보기</button>
       </div>
     </div>
   );
-
 };
 
 export default DetailComp;
